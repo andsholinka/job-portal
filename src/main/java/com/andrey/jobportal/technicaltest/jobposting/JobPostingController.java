@@ -2,6 +2,7 @@ package com.andrey.jobportal.technicaltest.jobposting;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JobPostingController {
     private final JobPostingService jobPostingService;
+
+    @PostMapping("/job-postings")
+    public ResponseEntity<JobPostingResponse> createJobPosting(@RequestBody JobPostingRequest jobPostingRequest) {
+
+        JobPosting jobPosting = this.jobPostingService.save(jobPostingRequest.convertToEntity());
+        JobPostingResponse jobPostingResponse = jobPosting.convertToResponse();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(jobPostingResponse);
+    }
 
     @GetMapping("/job-postings")
     public ResponseEntity<List<JobPostingResponse>> getJobPostings() {
