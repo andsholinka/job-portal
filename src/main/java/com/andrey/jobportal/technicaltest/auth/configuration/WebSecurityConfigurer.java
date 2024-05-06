@@ -56,7 +56,7 @@ public class WebSecurityConfigurer {
                                                 sessionManagement -> sessionManagement
                                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(
-                                                request -> request.requestMatchers("/register").permitAll())
+                                                request -> request.requestMatchers("/job-postings").permitAll())
                                 .authorizeHttpRequests(
                                                 request -> request.requestMatchers("/tokens").permitAll())
                                 .authorizeHttpRequests(

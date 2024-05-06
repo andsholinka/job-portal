@@ -3,6 +3,7 @@ package com.andrey.jobportal.technicaltest.jobposting.model;
 import java.util.List;
 
 import com.andrey.jobportal.technicaltest.employer.model.Employer;
+import com.andrey.jobportal.technicaltest.jobposting.model.dto.JobPostingResponse;
 import com.andrey.jobportal.technicaltest.proposal.model.Proposal;
 
 import jakarta.persistence.Entity;
@@ -15,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +24,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobPosting {
@@ -44,4 +47,15 @@ public class JobPosting {
     @OneToMany(mappedBy = "jobPosting")
     private List<Proposal> proposals;
 
+    public JobPostingResponse convertToResponse() {
+        return JobPostingResponse.builder()
+                .id(this.id)
+                .title(this.title)
+                .description(this.description)
+                .salary(this.salary)
+                .jobStatus(this.jobStatus)
+                .type(this.type)
+                .employerId(this.employer.getId())
+                .build();
+    }
 }
