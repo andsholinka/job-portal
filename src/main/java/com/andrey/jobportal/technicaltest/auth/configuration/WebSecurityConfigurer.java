@@ -58,6 +58,8 @@ public class WebSecurityConfigurer {
                                 .authorizeHttpRequests(
                                                 request -> request.requestMatchers("/job-postings").permitAll())
                                 .authorizeHttpRequests(
+                                                request -> request.requestMatchers("/proposals").permitAll())
+                                .authorizeHttpRequests(
                                                 request -> request.requestMatchers("/tokens").permitAll())
                                 .authorizeHttpRequests(
                                                 request -> request.anyRequest().authenticated());

@@ -1,5 +1,5 @@
 package com.andrey.jobportal.technicaltest.proposal.model;
 
-public enum ProposaStatus {
+public enum ProposalStatus {
     APPLIED, REJECTED, ACCEPTED
 }
