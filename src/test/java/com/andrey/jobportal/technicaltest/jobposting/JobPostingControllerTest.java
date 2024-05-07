@@ -71,6 +71,26 @@ public class JobPostingControllerTest {
         }
 
         @Test
+        void getJobPostings_shouldReturnAllJobPostings_whenCalled() throws Exception {
+                List<JobPosting> jobPostings = this.jobPostingRepository.findAll();
+                List<JobPostingResponse> expectedResult = jobPostings.stream().map(JobPosting::convertToResponse)
+                                .toList();
+                int expectedResultSize = expectedResult.size();
+
+                MvcResult result = this.client
+                                .perform(MockMvcRequestBuilders.get("/job-postings"))
+                                .andExpect(MockMvcResultMatchers.status().isOk())
+                                .andReturn();
+                String actualResultString = result.getResponse().getContentAsString();
+                List<JobPostingResponse> actualResult = this.objectMapper.readValue(actualResultString,
+                                new TypeReference<List<JobPostingResponse>>() {
+                                });
+
+                Assertions.assertEquals(expectedResultSize, actualResult.size());
+                Assertions.assertEquals(expectedResult, actualResult);
+        }
+
+        @Test
         void getJobPostings_shouldReturnAllJobPostingsWithStatusPublished_whenCalled() throws Exception {
                 List<JobPosting> jobPostings = this.jobPostingRepository.findAllByJobStatus(JobStatus.PUBLISHED);
                 List<JobPostingResponse> expectedResult = jobPostings.stream().map(JobPosting::convertToResponse)
@@ -78,7 +98,7 @@ public class JobPostingControllerTest {
                 int expectedResultSize = expectedResult.size();
 
                 MvcResult result = this.client
-                                .perform(MockMvcRequestBuilders.get("/job-postings"))
+                                .perform(MockMvcRequestBuilders.get("/job-postings?status=PUBLISHED"))
                                 .andExpect(MockMvcResultMatchers.status().isOk())
                                 .andReturn();
                 String actualResultString = result.getResponse().getContentAsString();

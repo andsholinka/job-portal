@@ -9,6 +9,6 @@ import com.andrey.jobportal.technicaltest.jobposting.model.JobStatus;
 
 public interface JobPostingRepository extends JpaRepository<JobPosting, Long> {
 
-    List<JobPosting> findAllByJobStatus(JobStatus published);
+    List<JobPosting> findAllByJobStatus(JobStatus status);
 
 }

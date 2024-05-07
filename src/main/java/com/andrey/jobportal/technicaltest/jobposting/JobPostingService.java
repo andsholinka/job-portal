@@ -18,7 +18,11 @@ public class JobPostingService {
         return this.jobPostingRepository.save(jobPosting);
     }
 
-    public List<JobPosting> getJobPostings() {
-        return this.jobPostingRepository.findAllByJobStatus(JobStatus.PUBLISHED);
+    public List<JobPosting> getJobPostings(JobStatus status) {
+        if (status != null) {
+            return this.jobPostingRepository.findAllByJobStatus(status);
+        } else {
+            return this.jobPostingRepository.findAll();
+        }
     }
 }
