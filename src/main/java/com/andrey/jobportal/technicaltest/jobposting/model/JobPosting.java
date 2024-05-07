@@ -34,6 +34,7 @@ public class JobPosting {
 
     private String title;
     private String description;
+    private String company;
     private String salary;
 
     @Enumerated(EnumType.STRING)
@@ -52,6 +53,7 @@ public class JobPosting {
                 .id(this.id)
                 .title(this.title)
                 .description(this.description)
+                .company(this.company)
                 .salary(this.salary)
                 .jobStatus(this.jobStatus)
                 .type(this.type)

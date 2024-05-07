@@ -20,6 +20,7 @@ public class JobPostingRequest {
     private String title;
     private String description;
     private String salary;
+    private String company;
     private JobStatus jobStatus;
     private String type;
     private Long employerId;
