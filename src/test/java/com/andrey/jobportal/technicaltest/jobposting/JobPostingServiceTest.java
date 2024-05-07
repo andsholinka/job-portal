@@ -52,9 +52,32 @@ public class JobPostingServiceTest {
         List<JobPosting> expectedResult = List.of(jobPosting);
         Mockito.when(this.jobPostingRepository.findAllByJobStatus(JobStatus.PUBLISHED)).thenReturn(expectedResult);
 
-        List<JobPosting> actualResult = this.jobPostingService.getJobPostings();
+        List<JobPosting> actualResult = this.jobPostingService.getJobPostings(JobStatus.PUBLISHED);
 
         Mockito.verify(this.jobPostingRepository).findAllByJobStatus(JobStatus.PUBLISHED);
+        Assertions.assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void getJobPostings_shouldReturnAllJobPostings_whenInvoked() {
+        JobPosting jobPosting = JobPosting.builder()
+                .id(1L)
+                .title("Software Engineer")
+                .description("We are looking for a software engineer to join our team")
+                .jobStatus(JobStatus.PUBLISHED)
+                .build();
+        JobPosting jobPostingDraft = JobPosting.builder()
+                .id(1L)
+                .title("Software Engineer")
+                .description("We are looking for a software engineer to join our team")
+                .jobStatus(JobStatus.DRAFT)
+                .build();
+        List<JobPosting> expectedResult = List.of(jobPosting, jobPostingDraft);
+        Mockito.when(this.jobPostingRepository.findAll()).thenReturn(expectedResult);
+
+        List<JobPosting> actualResult = this.jobPostingService.getJobPostings(null);
+
+        Mockito.verify(this.jobPostingRepository).findAll();
         Assertions.assertEquals(expectedResult, actualResult);
     }
 }
